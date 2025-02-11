@@ -189,7 +189,7 @@ export function VideoGenerator({
     try {
       setIsRendering(true);
 
-      const response = await fetch("http://api.tonypayet.com/render-video", {
+      const response = await fetch("https://m6hl5l-5000.csb.app/api/render", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ questions, style, duration: totalDuration }),
@@ -197,21 +197,22 @@ export function VideoGenerator({
 
       if (!response.ok) throw new Error("Failed to render video");
 
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
+      const data = await response.json();
+      const url = `${data.downloadLink}?download=true`; // 🔥 Ajoute ?download=true pour forcer le téléchargement
 
-      // Télécharger la vidéo
+      console.log("✅ Vidéo prête :", url);
+
+      // 🔹 Télécharger directement la vidéo
       const a = document.createElement("a");
       a.href = url;
-      a.download = "quiz.mp4";
+      a.download = "video.mp4"; // Forcer le téléchargement
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
 
-      URL.revokeObjectURL(url);
       onComplete(url);
     } catch (error) {
-      console.error("Error rendering video:", error);
+      console.error("❌ Erreur lors du rendu de la vidéo:", error);
       onError(
         error instanceof Error ? error.message : "Failed to render video"
       );
