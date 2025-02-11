@@ -189,7 +189,7 @@ export function VideoGenerator({
     try {
       setIsRendering(true);
 
-      const response = await fetch("http://api.tonypayet.com/api/render", {
+      const response = await fetch("http://api.tonypayet.com/render-video", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ questions, style, duration: totalDuration }),
