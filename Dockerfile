@@ -5,6 +5,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-COPY . .
+COPY . .  # Copie tout le projet
 
-CMD ["node", "server.js"]
+CMD ["node", "server/server.js"]  # Chemin correct vers le fichier
