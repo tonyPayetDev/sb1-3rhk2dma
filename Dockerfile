@@ -1,20 +1,24 @@
-# Utiliser l'image officielle Node.js comme base
+# Étape 1 : Utiliser une image de base Node.js
 FROM node:18
 
-# Créer et définir le répertoire de travail à l'intérieur du conteneur
+# Étape 2 : Créer et définir le répertoire de travail
 WORKDIR /app
 
-# Copier le fichier package.json et package-lock.json dans le conteneur
+# Étape 3 : Copier les fichiers package.json et package-lock.json
 COPY package*.json ./
 
-# Installer les dépendances du projet
+# Étape 4 : Installer les dépendances
 RUN npm install
 
-# Copier tout le code du projet dans le répertoire de travail du conteneur
+# Étape 5 : Copier le reste des fichiers du projet
 COPY . .
 
-# Exposer le port sur lequel l'application sera exécutée
-EXPOSE 3000
+# Étape 6 : Exposer le port sur lequel l'application sera exécutée
+EXPOSE 5173
 
-# Commande pour exécuter le serveur backend ou frontend
+# Étape 7 : Démarrer le serveur backend (si tu l'utilises dans npm run server)
+CMD ["npm", "run", "server"] 
+
+# Si tu veux également démarrer ton application frontend en parallèle,
+# tu peux ajouter une commande comme ceci :
 CMD ["npm", "run", "dev"]
