@@ -1,10 +1,20 @@
+# Utiliser l'image officielle Node.js comme base
 FROM node:18
 
-WORKDIR /
+# Créer et définir le répertoire de travail à l'intérieur du conteneur
+WORKDIR /app
 
+# Copier le fichier package.json et package-lock.json dans le conteneur
 COPY package*.json ./
+
+# Installer les dépendances du projet
 RUN npm install
 
-COPY . .  # Copie tout le projet
+# Copier tout le code du projet dans le répertoire de travail du conteneur
+COPY . .
 
-CMD ["node", "server/server.js"]  # Chemin correct vers le fichier
+# Exposer le port sur lequel l'application sera exécutée
+EXPOSE 3000  # Change le port selon ton application si nécessaire
+
+# Commande pour exécuter le serveur backend ou frontend
+CMD ["npm", "run", "dev"]
