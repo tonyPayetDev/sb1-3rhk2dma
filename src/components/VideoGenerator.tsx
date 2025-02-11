@@ -192,7 +192,11 @@ export function VideoGenerator({
       const response = await fetch("https://m6hl5l-5000.csb.app/api/render", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ questions, style, duration: totalDuration }),
+        body: JSON.stringify({
+          questions,
+          style,
+          duration: questions.length * 5,
+        }),
       });
 
       if (!response.ok) throw new Error("Failed to render video");

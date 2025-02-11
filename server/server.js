@@ -15,37 +15,40 @@ app.use(cors()); // ✅ Autorise les requêtes depuis un autre domaine
 app.use(express.json());
 
 app.post("/api/render", (req, res) => {
+  const { questions, style } = req.body;
   const outputPath = path.join(__dirname, "out/video.mp4");
+  const propsPath = path.join(__dirname, "out/inputProps.json");
 
-  console.log(`🎥 Début du rendu vidéo... Fichier cible: ${outputPath}`);
+  console.log("📌 Requête reçue avec les données :", { questions, style });
 
-  exec(
-    `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath}`,
-    { maxBuffer: 1024 * 10000 },
-    (error, stdout, stderr) => {
-      if (error) {
-        console.error("❌ Erreur lors du rendu :", error);
-        return res.status(500).json({ error: error.message });
-      }
+  if (!Array.isArray(questions) || questions.length === 0) {
+    return res
+      .status(400)
+      .json({ error: "Les questions ne sont pas valides ou sont vides !" });
+  }
 
-      console.log("✅ Vidéo générée avec succès !");
-      console.log("📄 Logs stdout:", stdout);
-      console.log("⚠️ Logs stderr:", stderr);
+  // 🔥 Sauvegarder les props dans un fichier JSON pour éviter les problèmes d'échappement
+  fs.writeFileSync(propsPath, JSON.stringify({ questions, style }));
 
-      // Vérifier périodiquement si le fichier est bien créé
-      const checkFileInterval = setInterval(() => {
-        if (fs.existsSync(outputPath)) {
-          clearInterval(checkFileInterval);
-          console.log("📂 Fichier vidéo trouvé, envoi du lien au frontend.");
+  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath}`;
 
-          res.json({
-            message: "Vidéo prête !",
-            downloadLink: `https://m6hl5l-5000.csb.app/video.mp4`,
-          });
-        }
-      }, 1000); // Vérifie toutes les 1 seconde
+  console.log("🎥 Exécution de la commande :", command);
+
+  exec(command, { maxBuffer: 1024 * 10000 }, (error, stdout, stderr) => {
+    if (error) {
+      console.error("❌ Erreur lors du rendu :", error);
+      return res.status(500).json({ error: error.message, stderr });
     }
-  );
+
+    console.log("✅ Vidéo générée avec succès !");
+    console.log("📄 Logs stdout:", stdout);
+    console.log("⚠️ Logs stderr:", stderr);
+
+    res.json({
+      message: "Vidéo prête !",
+      downloadLink: `https://m6hl5l-5000.csb.app/video.mp4`,
+    });
+  });
 });
 
 // Servir la vidéo générée
