@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Exposer le port sur lequel l'application sera exécutée
-EXPOSE 3000  # Change le port selon ton application si nécessaire
+EXPOSE 3000
 
 # Commande pour exécuter le serveur backend ou frontend
 CMD ["npm", "run", "dev"]
