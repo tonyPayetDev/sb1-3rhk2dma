@@ -16,9 +16,5 @@ COPY . .
 # Étape 6 : Exposer le port sur lequel l'application sera exécutée
 EXPOSE 5173
 
-# Étape 7 : Démarrer le serveur backend (si tu l'utilises dans npm run server)
-CMD ["npm", "run", "server"] 
-
-# Si tu veux également démarrer ton application frontend en parallèle,
-# tu peux ajouter une commande comme ceci :
-CMD ["npm", "run", "dev"]
+# Étape 7 : Démarrer le serveur backend et le frontend en parallèle
+CMD ["sh", "-c", "npm run server & npm run dev"]
