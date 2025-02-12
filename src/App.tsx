@@ -11,6 +11,7 @@ import { Video, Settings, Download, FileVideo, Wand2, Key, Brain } from 'lucide-
 
 function App() {
   const [showGame, setShowGame] = useState(false);
+  const generateUUID = () => window.crypto?.randomUUID?.() || "fallback-uuid";
 
   if (!showGame) {
     return (
@@ -241,7 +242,7 @@ function GameInterface() {
       const generatedQCM: GeneratedQCM = JSON.parse(data.choices[0].message.content);
 
       const questions: Question[] = generatedQCM.qcm.map(item => ({
-        id: crypto.randomUUID(),
+        id: generateUUID.randomUUID(),
         text: item.question,
         options: item.answers.map(a => ({
           text: a.text,
