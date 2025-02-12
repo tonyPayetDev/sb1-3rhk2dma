@@ -8,10 +8,10 @@ import { QuestionGenerator } from './components/QuestionGenerator';
 import { ApiSettings } from './components/ApiSettings';
 import type { Question, QuizStyle, QuizState, GeneratedQCM } from './types';
 import { Video, Settings, Download, FileVideo, Wand2, Key, Brain } from 'lucide-react';
+  const generateUUID = () => window.crypto?.randomUUID?.() || "fallback-uuid";
 
 function App() {
   const [showGame, setShowGame] = useState(false);
-  const generateUUID = () => window.crypto?.randomUUID?.() || "fallback-uuid";
 
   if (!showGame) {
     return (
