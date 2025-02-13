@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Étape 6 : Exposer le port sur lequel l'application sera exécutée
-EXPOSE 5173
+EXPOSE 3000
 
 # Étape 7 : Démarrer le serveur backend et le frontend en parallèle
 CMD ["sh", "-c", "npm run server & npm run dev"]
