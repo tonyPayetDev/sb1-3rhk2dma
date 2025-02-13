@@ -13,6 +13,9 @@ const app = express();
 const PORT = 5000;
 app.use(cors()); // ✅ Autorise les requêtes depuis un autre domaine
 app.use(express.json());
+app.get("/api/status", (req, res) => {
+  res.json({ status: "API is running", message: "Everything is working fine!" });
+});
 
 app.post("/api/render", (req, res) => {
   const { questions, style } = req.body;
