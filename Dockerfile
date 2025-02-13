@@ -12,7 +12,8 @@ RUN npm install
 
 # Étape 5 : Copier le reste des fichiers du projet
 COPY . .
-
+# Expose le port 5000 pour l'API backend
+EXPOSE 5000
 # Étape 6 : Exposer le port sur lequel l'application sera exécutée
 EXPOSE 3000
 
