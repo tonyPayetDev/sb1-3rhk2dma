@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 5000;
+const PORT = 5001;
 app.use(cors()); // ✅ Autorise les requêtes depuis un autre domaine
 app.use(express.json());
 app.get("/api/status", (req, res) => {
