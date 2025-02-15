@@ -17,7 +17,7 @@ app.get("/api/status", (req, res) => {
   res.json({ status: "API is running", message: "Everything is working fine!" });
 });
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
+  console.log(`🚀 Serveur démarré tony test sur http://localhost:${PORT}`);
 });
 
 app.post("/api/render", (req, res) => {
