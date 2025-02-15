@@ -16,9 +16,7 @@ app.use(express.json());
 app.get("/api/status", (req, res) => {
   res.json({ status: "API is running", message: "Everything is working fine!" });
 });
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Serveur démarré tony test sur http://localhost:${PORT}`);
-});
+
 
 app.post("/api/render", (req, res) => {
   const { questions, style } = req.body;
