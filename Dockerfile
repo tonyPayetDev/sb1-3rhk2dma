@@ -1,6 +1,16 @@
 # Étape 1 : Utiliser une image de base Node.js
 FROM node:18
 
+# Install required libraries for Chrome
+RUN apt-get update && apt-get install -y \
+    libnss3 \
+    libatk-bridge2.0-0 \
+    libx11-xcb1 \
+    libdbus-1-3 \
+    libgdk-pixbuf2.0-0 \
+    libnspr4 \
+    libxss1 \
+    && rm -rf /var/lib/apt/lists/*
 # Étape 2 : Créer et définir le répertoire de travail
 WORKDIR /app
 
