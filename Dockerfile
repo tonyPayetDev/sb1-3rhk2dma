@@ -1,6 +1,6 @@
 # Étape 1 : Utiliser une image de base Node.js
 FROM node:18
-ENV VITE_API_URL=localhost:5001
+ENV VITE_API_URL=localhost:5002
 
 # Install required libraries for Chrome
 # Installer les bibliothèques nécessaires pour Chromium
@@ -33,7 +33,7 @@ RUN npm install
 COPY . .
 
 # Étape 6 : Exposer le port sur lequel l'application sera exécutée
-EXPOSE 5001
+EXPOSE 5002
 
 # Étape 7 : Démarrer le serveur backend et le frontend en parallèle
 CMD ["sh", "-c", "npm run server"]
