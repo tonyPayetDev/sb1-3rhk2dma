@@ -190,7 +190,7 @@ export function VideoGenerator({
     try {
       setIsRendering(true);
       // http://l88ggc8w4w00o0oww48k4gk4.45.90.121.197.sslip.io/ https://m6hl5l-5000.csb.app
-      const response = await fetch('`${apiUrl}/api/render', {
+      const response = await fetch(`${apiUrl}/api/render`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
