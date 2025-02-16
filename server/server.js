@@ -14,7 +14,7 @@ app.use(cors({
 }));
 
 // Servir la vidéo générée
-app.get("/video.mp4", (req, res) => {
+app.get("/api/render", (req, res) => {
   const filePath = path.join(__dirname, "out/video.mp4");
 
   if (fs.existsSync(filePath)) {
