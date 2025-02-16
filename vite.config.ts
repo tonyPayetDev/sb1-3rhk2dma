@@ -6,13 +6,13 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',  // Permet à Vite d'écouter sur toutes les interfaces réseau
     port: 3000,
-    proxy: {
-      '/api': {
-        target: 'http://45.90.121.197:5001',  // Change localhost par host.docker.internal
-        changeOrigin: true,
-        secure: false,
-      }
-    }
+   proxy: {
+  '/api': {
+    target: 'http://host.docker.internal:5001', // Utiliser l'IP de l'hôte dans Docker
+    changeOrigin: true,
+    secure: false
+  }
+}
   },
   optimizeDeps: {
     include: ['react', 'react-dom'],
