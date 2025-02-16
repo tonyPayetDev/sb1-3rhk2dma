@@ -13,7 +13,7 @@ export default defineConfig({
         secure: false
       }
     }
-  }
+  },
   optimizeDeps: {
     include: ['react', 'react-dom'],
     exclude: ['@remotion/player', 'remotion'],
