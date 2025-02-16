@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     libatk1.0-0 \
     libpangocairo-1.0-0 \
     libgtk-3-0 \
+    libgbm1 \
     && rm -rf /var/lib/apt/lists/*
 # Étape 2 : Créer et définir le répertoire de travail
 WORKDIR /app
