@@ -77,7 +77,7 @@ app.post("/api/render", (req, res) => {
   // 🔥 Sauvegarder les props dans un fichier JSON pour éviter les problèmes d'échappement
   fs.writeFileSync(propsPath, JSON.stringify({ questions, style }));
 
- const command = `VITE_API_URL=${process.env.VITE_API_URL} npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --no-sandbox`;
+ const command = ` npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --no-sandbox`;
 
   console.log("🎥 Exécution de la commande :", command);
 
