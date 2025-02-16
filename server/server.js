@@ -9,7 +9,9 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 5001;
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Assure-toi que ton frontend pointe vers cette origine
+}));
 
 // Servir la vidéo générée
 app.get("/video.mp4", (req, res) => {
