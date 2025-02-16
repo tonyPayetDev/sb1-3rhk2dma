@@ -46,7 +46,7 @@ const apiUrl = process.env.VITE_API_URL; // Accéder à la variable d'environnem
 console.log("VITE_API_URL is:", apiUrl);
 
 const app = express();
-const PORT = 5001;  // Changez de 5001 à 5002
+const PORT = 5002;  // Changez de 5001 à 5002
 
 app.use(cors()); // ✅ Autorise les requêtes depuis un autre domaine
 app.use(express.json());
