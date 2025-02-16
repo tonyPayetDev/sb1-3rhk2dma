@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://host.docker.internal:5001',  // Change localhost par host.docker.internal
+        target: 'http://45.90.121.197:5001',  // Change localhost par host.docker.internal
         changeOrigin: true,
         secure: false,
       }
