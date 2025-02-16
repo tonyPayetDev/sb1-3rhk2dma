@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3000,
    proxy: {
   '/api': {
-    target: 'http://127.0.0.1:5001', // Utiliser l'IP de l'hôte dans Docker
+    target: 'http://localhost:5001',  // ou une autre IP de ton hôte
     changeOrigin: true,
     secure: false
   }
