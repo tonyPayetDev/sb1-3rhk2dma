@@ -4,20 +4,32 @@ import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import fs from "fs";
-const apiUrl = process.env.VITE_API_URL;
+require('dotenv').config(); // Charger le fichier .env
 
 // Convertir __dirname pour ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const apiUrl = process.env.VITE_API_URL; // Accéder à la variable d'environnement
+
+// Vérification
+console.log("VITE_API_URL is:", apiUrl);
+
 const app = express();
 const PORT = 5001;
+
 app.use(cors()); // ✅ Autorise les requêtes depuis un autre domaine
 app.use(express.json());
+
+// Endpoint simple pour tester si l'API fonctionne
 app.get("/api/status", (req, res) => {
   res.json({ status: "API is running", message: "Everything is working fine!" });
 });
 
+// Lancer l'application sur le port défini
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
 
 app.post("/api/render", (req, res) => {
   const { questions, style } = req.body;
