@@ -4,8 +4,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import fs from "fs";
-require('dotenv').config(); // Charger le fichier .env
-
+import { config } from 'dotenv';
+config(); // Charger le fichier .env
 // Convertir __dirname pour ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
