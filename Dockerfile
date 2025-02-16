@@ -1,5 +1,6 @@
 # Étape 1 : Utiliser une image de base Node.js
 FROM node:18
+ENV VITE_API_URL=localhost:5001
 
 # Install required libraries for Chrome
 # Installer les bibliothèques nécessaires pour Chromium
