@@ -2,6 +2,7 @@
 FROM node:18
 
 # Install required libraries for Chrome
+# Installer les bibliothèques nécessaires pour Chromium
 RUN apt-get update && apt-get install -y \
     libnss3 \
     libatk-bridge2.0-0 \
@@ -10,6 +11,12 @@ RUN apt-get update && apt-get install -y \
     libgdk-pixbuf2.0-0 \
     libnspr4 \
     libxss1 \
+    libxcomposite1 \
+    libxrandr2 \
+    libasound2 \
+    libatk1.0-0 \
+    libpangocairo-1.0-0 \
+    libgtk-3-0 \
     && rm -rf /var/lib/apt/lists/*
 # Étape 2 : Créer et définir le répertoire de travail
 WORKDIR /app
