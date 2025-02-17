@@ -11,8 +11,10 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = 5000;
+
 app.use(cors()); // ✅ Autorise les requêtes depuis un autre domaine
 app.use(express.json());
+
 app.get("/api/status", (req, res) => {
   res.json({ status: "API is running", message: "Everything is working fine!" });
 });
@@ -24,6 +26,7 @@ app.post("/api/render", (req, res) => {
 
   console.log("📌 Requête reçue avec les données :", { questions, style });
 
+  // Vérification des données reçues
   if (!Array.isArray(questions) || questions.length === 0) {
     return res
       .status(400)
@@ -31,7 +34,12 @@ app.post("/api/render", (req, res) => {
   }
 
   // 🔥 Sauvegarder les props dans un fichier JSON pour éviter les problèmes d'échappement
-  fs.writeFileSync(propsPath, JSON.stringify({ questions, style }));
+  try {
+    fs.writeFileSync(propsPath, JSON.stringify({ questions, style }), "utf8");
+  } catch (error) {
+    console.error("❌ Erreur lors de la sauvegarde des props :", error);
+    return res.status(500).json({ error: "Erreur lors de la sauvegarde des données." });
+  }
 
   const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath}`;
 
@@ -47,9 +55,15 @@ app.post("/api/render", (req, res) => {
     console.log("📄 Logs stdout:", stdout);
     console.log("⚠️ Logs stderr:", stderr);
 
+    // Vérification de l'existence du fichier généré avant de répondre
+    if (!fs.existsSync(outputPath)) {
+      console.error("❌ Vidéo non générée !");
+      return res.status(500).json({ error: "Erreur dans la génération de la vidéo." });
+    }
+
     res.json({
       message: "Vidéo prête !",
-      downloadLink: `https://m6hl5l-5000.csb.app/video.mp4`,
+      downloadLink: `http://localhost:${PORT}/video.mp4`, // Correction de l'URL pour que ce soit dynamique
     });
   });
 });
@@ -69,7 +83,7 @@ app.use("/video.mp4", (req, res) => {
       .json({ error: "Vidéo non trouvée. Essayez de la régénérer." });
   }
 });
+
 app.listen(PORT, '0.0.0.0', () => {
     console.log('🚀 Serveur démarré sur http://0.0.0.0:5000');
 });
-
