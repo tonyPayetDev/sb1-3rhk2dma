@@ -15,6 +15,5 @@ COPY . .
 # Expose le port 5000 pour l'API backend
 EXPOSE 5000
 
-
 # Étape 7 : Démarrer le serveur backend et le frontend en parallèle
 CMD ["sh", "-c", "npm run server"]
