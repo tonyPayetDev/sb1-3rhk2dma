@@ -14,8 +14,7 @@ RUN npm install
 COPY . .
 # Expose le port 5000 pour l'API backend
 EXPOSE 5000
-# Étape 6 : Exposer le port sur lequel l'application sera exécutée
-EXPOSE 3000
+
 
 # Étape 7 : Démarrer le serveur backend et le frontend en parallèle
-CMD ["sh", "-c", "npm run server & npm run dev"]
+CMD ["sh", "-c", "npm run server"]
