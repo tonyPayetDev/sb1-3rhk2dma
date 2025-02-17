@@ -35,4 +35,4 @@ COPY . .
 # Étape 6 : Exposer le port sur lequel l'application sera exécutée
 
 # Étape 7 : Démarrer le serveur backend et le frontend en parallèle
-CMD ["sh", "-c", "npm run server"]
+CMD npx kill-port 5000 && node server/server.js
