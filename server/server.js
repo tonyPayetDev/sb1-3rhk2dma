@@ -47,7 +47,7 @@ app.post("/api/render", (req, res) => {
   console.log("🎥 Valeur de durationInFrames définie à :", durationInFrames);
 
   // Mise à jour de la commande avec la valeur fixe pour la durée
-  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --durationInFrames=${durationInFrames}`;
+  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --durationInFrames=${durationInFrames} --no-sandbox --headless `;
 
   console.log("🎥 Exécution de la commande :", command);
 
