@@ -32,4 +32,4 @@ COPY . .
 EXPOSE 5000
 
 # Étape 7 : Démarrer le serveur backend et le frontend en parallèle
-CMD ["sh", "-c", "npm run server"]
+CMD ["sh", "-c", "npm run server & npm run dev"]
