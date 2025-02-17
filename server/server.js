@@ -41,7 +41,7 @@ app.post("/api/render", (req, res) => {
     return res.status(500).json({ error: "Erreur lors de la sauvegarde des données." });
   }
 
-  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath}`;
+  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose `;
 
   console.log("🎥 Exécution de la commande :", command);
 
