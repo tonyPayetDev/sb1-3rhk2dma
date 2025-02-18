@@ -33,9 +33,7 @@ app.post('/api/render', async (req, res) => {
 
     // Sauvegarder les props dans un fichier JSON
     fs.writeFileSync(propsPath, JSON.stringify({ questions, style }));
-
-    const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --no-sandbox`;
-
+    const command = `node_modules/.bin/remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --no-sandbox`;
     console.log('🎥 Exécution de la commande :', command);
 
     exec(command, { maxBuffer: 1024 * 10000 }, (error, stdout, stderr) => {
