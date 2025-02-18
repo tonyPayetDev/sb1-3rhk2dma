@@ -41,7 +41,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const apiUrl = process.env.VITE_API_URL; // Accéder à la variable d'environnement
-
+const options = {
+  cert: fs.readFileSync('/etc/letsencrypt/live/dev.tonypayet.com/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/dev.tonypayet.com/privkey.pem'),
+};
+https.createServer(options, app).listen(port, () => {
+  console.log(`Server running at https://dev.tonypayet.com:${port}`);
+});
 // Vérification
 console.log("VITE_API_URL is:", apiUrl);
 
