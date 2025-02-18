@@ -1,71 +1,70 @@
 import express from 'express';
 import { exec } from 'child_process';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import fs from 'fs';
 import cors from 'cors';
 import { config } from 'dotenv';
 
-config(); // Charger le fichier .env
+config(); // Charger les variables d'environnement
 
-// Convertir __dirname pour ESM
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-// Créer le dossier 'out' si il n'existe pas
-const outDir = path.join(__dirname, 'out');
-if (!fs.existsSync(outDir)) {
-  fs.mkdirSync(outDir, { recursive: true });
-}
-
-// Ensuite, écris le fichier 'inputProps.json'
-fs.writeFileSync(propsPath, JSON.stringify({ questions, style }));
-
-// Initialiser Express
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Définir le port du serveur
-const PORT = process.env.PORT || 5000;
+// Utiliser /tmp pour éviter les erreurs d'écriture sur Vercel
+const outDir = "/tmp/out";
+const propsPath = path.join(outDir, "inputProps.json");
+const outputPath = path.join(outDir, "video.mp4");
 
-app.post('/api/render', (req, res) => {
-  const { questions, style } = req.body;
-  const outputPath = path.join(__dirname, 'out', 'video.mp4');
-  const propsPath = path.join(__dirname, 'out', 'inputProps.json');
+// Vérifier et créer le dossier si nécessaire
+if (!fs.existsSync(outDir)) {
+  fs.mkdirSync(outDir, { recursive: true });
+}
 
-  console.log('📌 Requête reçue avec les données :', { questions, style });
+app.post('/api/render', async (req, res) => {
+  try {
+    const { questions, style } = req.body;
 
-  if (!Array.isArray(questions) || questions.length === 0) {
-    return res.status(400).json({ error: 'Les questions ne sont pas valides ou sont vides !' });
-  }
+    console.log('📌 Requête reçue avec les données :', { questions, style });
 
-  // Sauvegarder les props dans un fichier JSON
-  fs.writeFileSync(propsPath, JSON.stringify({ questions, style }));
-
-  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --no-sandbox`;
-
-  console.log('🎥 Exécution de la commande :', command);
-
-  exec(command, { maxBuffer: 1024 * 10000 }, (error, stdout, stderr) => {
-    if (error) {
-      console.error('❌ Erreur lors du rendu :', error);
-      return res.status(500).json({ error: error.message, stderr });
+    if (!Array.isArray(questions) || questions.length === 0) {
+      return res.status(400).json({ error: 'Les questions ne sont pas valides ou sont vides !' });
     }
 
-    console.log('✅ Vidéo générée avec succès !');
-    console.log('📄 Logs stdout:', stdout);
-    console.log('⚠️ Logs stderr:', stderr);
+    // Sauvegarder les props dans un fichier JSON
+    fs.writeFileSync(propsPath, JSON.stringify({ questions, style }));
 
-    res.json({
-      message: 'Vidéo prête !',
-      downloadLink: '/video.mp4',  // URL de la vidéo
+    const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --no-sandbox`;
+
+    console.log('🎥 Exécution de la commande :', command);
+
+    exec(command, { maxBuffer: 1024 * 10000 }, (error, stdout, stderr) => {
+      if (error) {
+        console.error('❌ Erreur lors du rendu :', error);
+        return res.status(500).json({ error: error.message, stderr });
+      }
+
+      console.log('✅ Vidéo générée avec succès !');
+      console.log('📄 Logs stdout:', stdout);
+      console.log('⚠️ Logs stderr:', stderr);
+
+      res.json({
+        message: 'Vidéo prête !',
+        downloadLink: '/api/video', // Endpoint pour récupérer la vidéo
+      });
     });
-  });
+  } catch (err) {
+    console.error('🚨 Erreur serveur:', err);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
+  }
 });
 
-// Démarrer le serveur
-app.listen(PORT, () => {
-  console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
+// Endpoint pour récupérer la vidéo générée
+app.get('/api/video', (req, res) => {
+  if (!fs.existsSync(outputPath)) {
+    return res.status(404).json({ error: 'Vidéo non trouvée' });
+  }
+  res.sendFile(outputPath);
 });
 
-export default app; // Exporte le serveur pour être utilisé dans d'autres fichiers ou comme handler Vercel
+export default app;
