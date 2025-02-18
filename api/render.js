@@ -11,6 +11,14 @@ config(); // Charger le fichier .env
 // Convertir __dirname pour ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+// Créer le dossier 'out' si il n'existe pas
+const outDir = path.join(__dirname, 'out');
+if (!fs.existsSync(outDir)) {
+  fs.mkdirSync(outDir, { recursive: true });
+}
+
+// Ensuite, écris le fichier 'inputProps.json'
+fs.writeFileSync(propsPath, JSON.stringify({ questions, style }));
 
 // Initialiser Express
 const app = express();
