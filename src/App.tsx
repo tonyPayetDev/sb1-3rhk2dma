@@ -8,6 +8,7 @@ import { QuestionGenerator } from './components/QuestionGenerator';
 import { ApiSettings } from './components/ApiSettings';
 import type { Question, QuizStyle, QuizState, GeneratedQCM } from './types';
 import { Video, Settings, Download, FileVideo, Wand2, Key, Brain } from 'lucide-react';
+  const generateUUID = () => window.crypto?.randomUUID?.() || "fallback-uuid";
 
 function App() {
   const [showGame, setShowGame] = useState(false);
@@ -241,7 +242,7 @@ function GameInterface() {
       const generatedQCM: GeneratedQCM = JSON.parse(data.choices[0].message.content);
 
       const questions: Question[] = generatedQCM.qcm.map(item => ({
-        id: crypto.randomUUID(),
+        id: generateUUID,
         text: item.question,
         options: item.answers.map(a => ({
           text: a.text,

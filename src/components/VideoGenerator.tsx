@@ -8,6 +8,7 @@ import {
 } from "remotion";
 import { Player } from "@remotion/player";
 import type { Question, QuizStyle } from "../types";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 interface VideoGeneratorProps {
   questions: Question[];
@@ -188,8 +189,8 @@ export function VideoGenerator({
   const handleRenderVideo = async () => {
     try {
       setIsRendering(true);
-
-      const response = await fetch("https://m6hl5l-5000.csb.app/api/render", {
+      // http://l88ggc8w4w00o0oww48k4gk4.45.90.121.197.sslip.io/ https://m6hl5l-5000.csb.app
+      const response = await fetch(`http://localhost:5001/api/render`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
