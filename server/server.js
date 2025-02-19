@@ -50,7 +50,7 @@ app.post("/api/render", (req, res) => {
   console.log("🎥 Durée totale en frames :", durationInFrames);
 
   // Commande d'exécution avec des optimisations supplémentaires
-  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --no-sandbox --headless --durationInFrames=${durationInFrames} --quality=medium`; // Ajout d'une qualité réduite
+  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --no-sandbox --headless --durationInFrames=${durationInFrames} --jpeg-quality=50`;
 
   console.log("🎥 Exécution de la commande :", command);
 
