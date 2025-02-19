@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: '0.0.0.0', // Écoute sur toutes les interfaces
-    port: 5000, // Port utilisé en local
+    port: 3000, // Port utilisé en local
     https: false, // Coolify gère HTTPS
     proxy: {
       "/api": {
