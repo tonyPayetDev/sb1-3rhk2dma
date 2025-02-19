@@ -56,7 +56,7 @@ questions.forEach(question => {
 });
 
 
-  const durationInFrames = 150 ; // totalDurationInSeconds * framesPerSecond;
+  const durationInFrames = 500 ; // totalDurationInSeconds * framesPerSecond;
 
   console.log("🎥 Durée totale en frames :", durationInFrames);
 
