@@ -72,8 +72,9 @@ app.post("/api/render", (req, res) => {
 
     res.json({
       message: "Vidéo prête !",
-      downloadLink: `https://dev.tonypayet.com/video.mp4`, // Correction de l'URL pour que ce soit dynamique
+      downloadLink: `${req.protocol}://${req.get("host")}/out/video.mp4`, // 🔥 URL dynamique
     });
+
   });
 });
 
