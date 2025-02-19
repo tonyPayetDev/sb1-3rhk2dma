@@ -53,29 +53,31 @@ app.post("/api/render", (req, res) => {
   const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --no-sandbox --headless --durationInFrames=${durationInFrames} --jpeg-quality=50`;
 
   console.log("🎥 Exécution de la commande :", command);
+exec(command, { maxBuffer: 1024 * 10000 }, (error, stdout, stderr) => {
+  if (error) {
+    console.error("❌ Erreur lors du rendu :", error);
+    return res.status(500).json({ error: error.message, stderr });
+  }
 
-  exec(command, { maxBuffer: 1024 * 10000 }, (error, stdout, stderr) => {
-    if (error) {
-      console.error("❌ Erreur lors du rendu :", error);
-      return res.status(500).json({ error: error.message, stderr });
-    }
+  console.log("✅ Vidéo générée avec succès !");
+  console.log("📄 Logs stdout:", stdout);
+  console.log("⚠️ Logs stderr:", stderr);
 
-    console.log("✅ Vidéo générée avec succès !");
-    console.log("📄 Logs stdout:", stdout);
-    console.log("⚠️ Logs stderr:", stderr);
+  // Vérification de l'existence du fichier généré avant de répondre
+  const outputPath = path.join(__dirname, 'out/video.mp4'); // S'assurer que ce chemin est correct
 
-    // Vérification de l'existence du fichier généré avant de répondre
-    if (!fs.existsSync(outputPath)) {
-      console.error("❌ Vidéo non générée !");
-      return res.status(500).json({ error: "Erreur dans la génération de la vidéo." });
-    }
+  if (!fs.existsSync(outputPath)) {
+    console.error("❌ Vidéo non générée !");
+    return res.status(500).json({ error: "Erreur dans la génération de la vidéo." });
+  }
 
-    res.json({
-      message: "Vidéo prête !",
-      downloadLink: `https://dev.tonypayet.com/video.mp4`, // 🔥 URL dynamique
-    });
-
+  // Si le fichier est généré correctement
+  res.json({
+    message: "Vidéo prête !",
+    downloadLink: `https://${req.get('host')}/video.mp4`, // Dynamique pour s'adapter à l'environnement de production
   });
+});
+
 });
 
 app.use("/video.mp4", (req, res) => {
