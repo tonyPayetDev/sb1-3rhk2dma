@@ -21,8 +21,8 @@ app.get("/api/status", (req, res) => {
 
 app.post("/api/render", (req, res) => {
   const { questions, style } = req.body;
-  const outputPath = path.join(__dirname, "/server/out/video.mp4");
-  const propsPath = path.join(__dirname, "/server/out/inputProps.json");
+  const outputPath = path.join(__dirname, "out/video.mp4");
+  const propsPath = path.join(__dirname, "out/inputProps.json");
 
   console.log("📌 Requête reçue avec les données :", { questions, style });
 
@@ -72,7 +72,7 @@ app.post("/api/render", (req, res) => {
 
     res.json({
       message: "Vidéo prête !",
-      downloadLink: `${req.protocol}://${req.get("host")}/server/out/video.mp4`, // 🔥 URL dynamique
+      downloadLink: `${req.protocol}://${req.get("host")}/video.mp4`, // 🔥 URL dynamique
     });
 
   });
@@ -80,7 +80,8 @@ app.post("/api/render", (req, res) => {
 
 // Servir la vidéo générée
 app.use("/video.mp4", (req, res) => {
-  const filePath = path.join(__dirname, "/server/out/video.mp4");
+  const filePath = path.join(__dirname, "/out/video.mp4");
+  console.error( filePath);
 
   // Vérifie si le fichier existe avant de l'envoyer
   if (fs.existsSync(filePath)) {
