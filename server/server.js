@@ -75,14 +75,14 @@ exec(command, { maxBuffer: 1024 * 10000 }, (error, stdout, stderr) => {
   // Si le fichier est généré correctement
 res.json({
   message: "Vidéo prête !",
-  downloadLink: `http://dev.tonypayet.com:5000/video.mp4`, // Enlever le port si présent
+  downloadLink: `https://dev.tonypayet.com/api/video.mp4`, // Enlever le port si présent
 });
 
 });
 
 });
 
-app.use("/video.mp4", (req, res) => {
+app.use("/api/video.mp4", (req, res) => {
   const filePath = path.resolve(__dirname, 'out/video.mp4');
 
   if (fs.existsSync(filePath)) {
