@@ -185,11 +185,13 @@ export function VideoGenerator({
   const totalDuration = questions.reduce((acc, q) => acc + q.duration, 0) * 30;
   const [isRendering, setIsRendering] = useState(false);
 
-  const handleRenderVideo = async () => {
+ const handleRenderVideo = async () => {
     try {
       setIsRendering(true);
-      // http://l88ggc8w4w00o0oww48k4gk4.45.90.121.197.sslip.io/ https://m6hl5l-5000.csb.app
-      const response = await fetch("/api/render", {
+
+      const baseURL = "http://l88ggc8w4w00o0oww48k4gk4.45.90.121.197.sslip.io"; // Remplace par l'URL de ton serveur
+
+      const response = await fetch(`${baseURL}/api/render`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -202,7 +204,7 @@ export function VideoGenerator({
       if (!response.ok) throw new Error("Failed to render video");
 
       const data = await response.json();
-      const url = `${data.downloadLink}?download=true`; // 🔥 Ajoute ?download=true pour forcer le téléchargement
+      const url = `${baseURL}${data.downloadLink}?download=true`; // 🔥 Ajoute ?download=true pour forcer le téléchargement
 
       console.log("✅ Vidéo prête :", url);
 
@@ -223,7 +225,7 @@ export function VideoGenerator({
     } finally {
       setIsRendering(false);
     }
-  };
+};
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
