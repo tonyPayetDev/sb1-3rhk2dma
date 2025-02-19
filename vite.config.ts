@@ -9,7 +9,7 @@ export default defineConfig({
     https: false, // Coolify gère HTTPS
     proxy: {
       "/api": {
-        target: "https://dev.tonypayet.com", // Redirige /api vers le backend HTTPS
+        target: "http://dev.tonypayet.com:5000", // Redirige /api vers le backend HTTPS
         changeOrigin: true,
         secure: false,
       }
