@@ -46,7 +46,7 @@ const durationInSecondsPerQuestion = 10; // Chaque question dure 5 secondes
 const framesPerSecond = 30; // Frame rate (30 fps)
 
 const totalDurationInSeconds = questions.length * durationInSecondsPerQuestion; // Durée totale en secondes
-const durationInFrames =15; // Fixe la durée à 30 secondes
+const durationInFrames =30; // Fixe la durée à 30 secondes
 
 console.log("🎥 Durée totale en frames :", durationInFrames);
 
