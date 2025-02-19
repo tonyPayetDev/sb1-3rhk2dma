@@ -87,6 +87,10 @@ app.use("/video.mp4", (req, res) => {
   if (fs.existsSync(filePath)) {
     console.log("📂 Envoi du fichier vidéo :", filePath);
     res.sendFile(filePath);
+    res.json({
+      message: "Vidéo prête !",
+      downloadLink: filePath, // 🔥 URL dynamique
+    });
   } else {
     console.error("❌ Fichier vidéo non trouvé !");
     res
