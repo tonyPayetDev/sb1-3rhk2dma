@@ -11,7 +11,7 @@ export default defineConfig({
       "/api": {
         target: "https://dev.tonypayet.com", // Redirige /api vers le backend HTTPS
         changeOrigin: true,
-        secure: true,
+        secure: false,
       }
     }
   },
