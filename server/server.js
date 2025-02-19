@@ -80,7 +80,9 @@ app.post("/api/render", (req, res) => {
 
 // Servir la vidéo générée
 app.use("/video.mp4", (req, res) => {
-   const filePath = path.join(__dirname, "out", "video.mp4");
+ //  const filePath = path.join(__dirname, "out", "video.mp4");
+  const filePath = '/app/server/out/video.mp4';
+
   console.error( filePath);
 
   // Vérifie si le fichier existe avant de l'envoyer
