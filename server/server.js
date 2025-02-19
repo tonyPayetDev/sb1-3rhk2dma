@@ -72,7 +72,7 @@ app.post("/api/render", (req, res) => {
 
     res.json({
       message: "Vidéo prête !",
-      downloadLink: `${req.protocol}://${req.get("host")}/video.mp4`, // 🔥 URL dynamique
+      downloadLink: `https://dev.tonypayet.com/video.mp4`, // 🔥 URL dynamique
     });
 
   });
@@ -80,7 +80,7 @@ app.post("/api/render", (req, res) => {
 
 // Servir la vidéo générée
 app.use("/video.mp4", (req, res) => {
-  const filePath = path.join(__dirname, "/out/video.mp4");
+   const filePath = path.join(__dirname, "out", "video.mp4");
   console.error( filePath);
 
   // Vérifie si le fichier existe avant de l'envoyer
