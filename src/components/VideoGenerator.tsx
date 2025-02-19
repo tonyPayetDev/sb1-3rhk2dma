@@ -185,7 +185,7 @@ export function VideoGenerator({
   const totalDuration = questions.reduce((acc, q) => acc + q.duration, 0) * 30;
   const [isRendering, setIsRendering] = useState(false);
 
- const handleRenderVideo = async () => {
+  const handleRenderVideo = async () => {
     try {
       setIsRendering(true);
 
@@ -225,34 +225,33 @@ export function VideoGenerator({
     } finally {
       setIsRendering(false);
     }
-};
+  };
 
   return (
-<div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-  <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full">
-    <h2 className="text-xl font-semibold mb-4">Video Preview</h2>
-    <div className="aspect-[9/16] w-full max-w-[600px] max-h-[800px] bg-gray-900 rounded-lg overflow-hidden">
-      <Player
-        component={QuizVideo}
-        inputProps={{ questions, style }}
-        durationInFrames={totalDuration}
-        fps={30}
-        compositionWidth={1080}
-        compositionHeight={1920}
-        controls
-        autoPlay
-        loop
-      />
+    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg shadow-xl p-6 max-w-md w-full">
+        <h2 className="text-xl font-semibold mb-4">Video Preview</h2>
+        <div className="aspect-[9/16] w-full max-w-[600px] max-h-[800px] bg-gray-900 rounded-lg overflow-hidden">
+          <Player
+            component={QuizVideo}
+            inputProps={{ questions, style }}
+            durationInFrames={totalDuration}
+            fps={30}
+            compositionWidth={1080}
+            compositionHeight={1920}
+            controls
+            autoPlay
+            loop
+          />
+        </div>
+        <button
+          onClick={handleRenderVideo}
+          disabled={isRendering}
+          className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50 mt-4"
+        >
+          {isRendering ? "Rendering..." : "Generate Video"}
+        </button>
+      </div>
     </div>
-    <button
-      onClick={handleRenderVideo}
-      disabled={isRendering}
-      className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50 mt-4"
-    >
-      {isRendering ? "Rendering..." : "Generate Video"}
-    </button>
-  </div>
-</div>
-
   );
 }
