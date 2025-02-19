@@ -41,17 +41,16 @@ app.post("/api/render", (req, res) => {
     return res.status(500).json({ error: "Erreur lors de la sauvegarde des données." });
   }
 
-  // Ajouter une valeur fixe pour durationInFrames pour déboguer
-const durationInSecondsPerQuestion = 5; // Chaque question dure 5 secondes
-const framesPerSecond = 30; // Frame rate (30 fps)
+  // 🔥 Optimisation du rendu
+  const durationInSecondsPerQuestion = 5;
+  const framesPerSecond = 30;
+  const totalDurationInSeconds = questions.length * durationInSecondsPerQuestion;
+  const durationInFrames = totalDurationInSeconds * framesPerSecond;
 
-const totalDurationInSeconds = questions.length * durationInSecondsPerQuestion; // Durée totale en secondes
-const durationInFrames = totalDurationInSeconds * framesPerSecond; // Conversion en frames
+  console.log("🎥 Durée totale en frames :", durationInFrames);
 
-console.log("🎥 Durée totale en frames :", durationInFrames);
-
-// Mise à jour de la commande avec la durée dynamique en frames
-const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --no-sandbox --headless --durationInFrames=${durationInFrames}`;
+  // Commande d'exécution avec des optimisations supplémentaires
+  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --no-sandbox --headless --durationInFrames=${durationInFrames} --quality=medium`; // Ajout d'une qualité réduite
 
   console.log("🎥 Exécution de la commande :", command);
 
@@ -73,7 +72,7 @@ const command = `npx remotion render src/components/remotionEntry.tsx VideoGener
 
     res.json({
       message: "Vidéo prête !",
-      downloadLink: `/video.mp4`, // Correction de l'URL pour que ce soit dynamique
+      downloadLink: `/download/video`, // Lien direct pour télécharger la vidéo
     });
   });
 });
@@ -94,6 +93,7 @@ app.get('/download/video', (req, res) => {
     res.status(404).json({ error: "Le fichier n'existe pas." });
   }
 });
+
 app.listen(PORT, '0.0.0.0', () => {
-    console.log('🚀 Serveur démarré sur http://0.0.0.0:5000');
+  console.log('🚀 Serveur démarré sur http://0.0.0.0:5000');
 });
