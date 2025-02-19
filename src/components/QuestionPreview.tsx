@@ -67,15 +67,17 @@ export function QuestionPreview({ question, style, keyword, autoMode, onNextQues
   };
 
   return (
-      <div
+      <div 
         className="rounded-lg shadow-lg p-8 flex flex-col justify-center bg-cover bg-center relative overflow-hidden"
         style={{
           backgroundImage: `url(${backgroundImage})`,
-          width: '35%',
-          height: '37%',
-          aspectRatio: '35 / 37',  // Ce ratio maintient l'aspect réel entre la largeur et la hauteur
+          width: '35%', // Définir la largeur à 35%
+          height: '37%', // Définir la hauteur à 37%
+          maxWidth: '100%', // S'assurer que l'image ne dépasse pas la largeur du parent
+          maxHeight: '100%', // S'assurer que l'image ne dépasse pas la hauteur du parent
         }}
       >
+
 
       {/* Overlay with gradient */}
       <div 
