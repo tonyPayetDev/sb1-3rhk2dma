@@ -72,10 +72,11 @@ exec(command, { maxBuffer: 1024 * 10000 }, (error, stdout, stderr) => {
   }
 
   // Si le fichier est généré correctement
-  res.json({
-    message: "Vidéo prête !",
-    downloadLink: `https://${req.get('host')}/video.mp4`, // Dynamique pour s'adapter à l'environnement de production
-  });
+res.json({
+  message: "Vidéo prête !",
+  downloadLink: `https://${req.get('host').replace(/:\d+$/, '')}/video.mp4`, // Enlever le port si présent
+});
+
 });
 
 });
