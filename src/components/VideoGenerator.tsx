@@ -189,7 +189,7 @@ export function VideoGenerator({
     try {
       setIsRendering(true);
 
-      const baseURL = "http://l88ggc8w4w00o0oww48k4gk4.45.90.121.197.sslip.io"; // Remplace par l'URL de ton serveur
+      const baseURL = "https://dev.tonypayet.com"; // Remplace par l'URL de ton serveur
 
       const response = await fetch(`${baseURL}/api/render`, {
         method: "POST",
