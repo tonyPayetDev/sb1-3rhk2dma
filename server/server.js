@@ -42,12 +42,12 @@ app.post("/api/render", (req, res) => {
   }
 
   // Ajouter une valeur fixe pour durationInFrames pour déboguer
-  const durationInFrames = 150;  // Fixe à 150 frames pour déboguer
+ // const durationInFrames = 150;  // Fixe à 150 frames pour déboguer
 
   console.log("🎥 Valeur de durationInFrames définie à :", durationInFrames);
 
   // Mise à jour de la commande avec la valeur fixe pour la durée
-  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --durationInFrames=${durationInFrames} --no-sandbox --headless `;
+  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --no-sandbox --headless `;
 
   console.log("🎥 Exécution de la commande :", command);
 
