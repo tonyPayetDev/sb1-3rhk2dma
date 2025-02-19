@@ -72,27 +72,27 @@ app.post("/api/render", (req, res) => {
 
     res.json({
       message: "Vidéo prête !",
-      downloadLink: `/download/video`, // Lien direct pour télécharger la vidéo
+      downloadLink: `https://dev.tonypayet.com/video.mp4`, // Correction de l'URL pour que ce soit dynamique
     });
   });
 });
 
-// Serve le fichier vidéo depuis le dossier 'out'
-app.get('/download/video', (req, res) => {
-  const videoPath = path.join(__dirname, 'out', 'video.mp4');
-  
-  // Vérifier si le fichier existe
-  if (fs.existsSync(videoPath)) {
-    res.download(videoPath, 'video.mp4', (err) => {
-      if (err) {
-        console.error("Erreur lors du téléchargement :", err);
-        res.status(500).json({ error: "Erreur lors du téléchargement du fichier." });
-      }
-    });
+// Servir la vidéo générée
+app.use("/video.mp4", (req, res) => {
+  const filePath = path.join(__dirname, "out/video.mp4");
+
+  // Vérifie si le fichier existe avant de l'envoyer
+  if (fs.existsSync(filePath)) {
+    console.log("📂 Envoi du fichier vidéo :", filePath);
+    res.sendFile(filePath);
   } else {
-    res.status(404).json({ error: "Le fichier n'existe pas." });
+    console.error("❌ Fichier vidéo non trouvé !");
+    res
+      .status(404)
+      .json({ error: "Vidéo non trouvée. Essayez de la régénérer." });
   }
 });
+
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log('🚀 Serveur démarré sur http://0.0.0.0:5000');
