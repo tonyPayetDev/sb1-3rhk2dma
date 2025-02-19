@@ -45,7 +45,7 @@ app.post("/api/render", (req, res) => {
   const durationInSecondsPerQuestion = 5;
   const framesPerSecond = 30;
   const totalDurationInSeconds = questions.length * durationInSecondsPerQuestion;
-  const durationInFrames = totalDurationInSeconds * framesPerSecond;
+  const durationInFrames =50;
 
   console.log("🎥 Durée totale en frames :", durationInFrames);
 
