@@ -41,27 +41,17 @@ app.post("/api/render", (req, res) => {
     return res.status(500).json({ error: "Erreur lors de la sauvegarde des données." });
   }
 
-  // 🔥 Optimisation du rendu : prendre en compte la durée de chaque question
-  const framesPerSecond = 30;
-  let totalDurationInSeconds = 0;
+  // Ajouter une valeur fixe pour durationInFrames pour déboguer
+const durationInSecondsPerQuestion = 10; // Chaque question dure 5 secondes
+const framesPerSecond = 30; // Frame rate (30 fps)
 
-  // Calculer la durée totale en secondes à partir de chaque question
-questions.forEach(question => {
-  if (typeof question.duration !== "number" || question.duration <= 0) {
-    console.error("❌ Durée invalide pour la question :", question);
-    return res.status(400).json({ error: "La durée de certaines questions est invalide." });
-  }
-  totalDurationInSeconds += question.duration;
-  console.log("✅ Durée de la question:", question.duration);
-});
+const totalDurationInSeconds = questions.length * durationInSecondsPerQuestion; // Durée totale en secondes
+const durationInFrames = totalDurationInSeconds * framesPerSecond; // Conversion en frames
 
+console.log("🎥 Durée totale en frames :", durationInFrames);
 
-  const durationInFrames = 500 ; // totalDurationInSeconds * framesPerSecond;
-
-  console.log("🎥 Durée totale en frames :", durationInFrames);
-
-  // Commande d'exécution avec des optimisations supplémentaires
-const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --no-sandbox --headless --durationInFrames=${durationInFrames} --resolution=1280x720`;
+// Mise à jour de la commande avec la durée dynamique en frames
+const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --no-sandbox --headless --durationInFrames=${durationInFrames}`;
 
   console.log("🎥 Exécution de la commande :", command);
 
