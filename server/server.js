@@ -46,15 +46,17 @@ app.post("/api/render", (req, res) => {
   let totalDurationInSeconds = 0;
 
   // Calculer la durée totale en secondes à partir de chaque question
-  questions.forEach(question => {
-    if (typeof question.duration !== "number" || question.duration <= 0) {
-      console.error("❌ Durée invalide pour la question :", question);
-      return res.status(400).json({ error: "La durée de certaines questions est invalide." });
-    }
-    totalDurationInSeconds += question.duration; // Ajouter la durée de chaque question
-  });
+questions.forEach(question => {
+  if (typeof question.duration !== "number" || question.duration <= 0) {
+    console.error("❌ Durée invalide pour la question :", question);
+    return res.status(400).json({ error: "La durée de certaines questions est invalide." });
+  }
+  totalDurationInSeconds += question.duration;
+  console.log("✅ Durée de la question:", question.duration);
+});
 
-  const durationInFrames = totalDurationInSeconds * framesPerSecond;
+
+  const durationInFrames = 150 ; // totalDurationInSeconds * framesPerSecond;
 
   console.log("🎥 Durée totale en frames :", durationInFrames);
 
