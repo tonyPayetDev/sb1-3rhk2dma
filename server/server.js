@@ -78,29 +78,23 @@ app.post("/api/render", (req, res) => {
   });
 });
 
-// Servir la vidéo générée
-// Servir la vidéo générée
 app.use("/video.mp4", (req, res) => {
-//  const filePath = path.join(__dirname, "out/video.mp4");
-const filePath = path.resolve(__dirname, 'out/video.mp4');
+  const filePath = path.resolve(__dirname, 'out/video.mp4');
 
-  // Vérifie si le fichier existe avant de l'envoyer
   if (fs.existsSync(filePath)) {
     console.log("📂 Envoi du fichier vidéo :", filePath);
-    res.sendFile(filePath);
-    res.json({
-      message: "Vidéo prête !",
-      downloadLink: filePath, // 🔥 URL dynamique
+    res.setHeader("Content-Type", "video/mp4");
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error("❌ Erreur lors de l'envoi du fichier :", err);
+        res.status(500).json({ error: "Erreur lors de l'envoi du fichier vidéo." });
+      }
     });
   } else {
     console.error("❌ Fichier vidéo non trouvé !");
-    res
-      .status(404)
-      .json({ error: "Vidéo non trouvée. Essayez de la régénérer." });
+    res.status(404).json({ error: "Vidéo non trouvée. Essayez de la régénérer." });
   }
 });
-
-
 app.listen(PORT, '0.0.0.0', () => {
   console.log('🚀 Serveur démarré sur http://0.0.0.0:5000');
 });
