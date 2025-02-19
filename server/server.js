@@ -42,12 +42,16 @@ app.post("/api/render", (req, res) => {
   }
 
   // Ajouter une valeur fixe pour durationInFrames pour déboguer
- // const durationInFrames = 150;  // Fixe à 150 frames pour déboguer
+const durationInSecondsPerQuestion = 5; // Chaque question dure 5 secondes
+const framesPerSecond = 30; // Frame rate (30 fps)
 
-  console.log("🎥 Valeur de durationInFrames définie à :", durationInFrames);
+const totalDurationInSeconds = questions.length * durationInSecondsPerQuestion; // Durée totale en secondes
+const durationInFrames = totalDurationInSeconds * framesPerSecond; // Conversion en frames
 
-  // Mise à jour de la commande avec la valeur fixe pour la durée
-  const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --no-sandbox --headless `;
+console.log("🎥 Durée totale en frames :", durationInFrames);
+
+// Mise à jour de la commande avec la durée dynamique en frames
+const command = `npx remotion render src/components/remotionEntry.tsx VideoGenerator ${outputPath} --props=${propsPath} --log=verbose --no-sandbox --headless --durationInFrames=${durationInFrames}`;
 
   console.log("🎥 Exécution de la commande :", command);
 
