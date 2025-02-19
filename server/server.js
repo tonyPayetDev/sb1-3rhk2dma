@@ -73,27 +73,27 @@ const command = `npx remotion render src/components/remotionEntry.tsx VideoGener
 
     res.json({
       message: "Vidéo prête !",
-      downloadLink: `http://localhost:${PORT}/video.mp4`, // Correction de l'URL pour que ce soit dynamique
+      downloadLink: `/video.mp4`, // Correction de l'URL pour que ce soit dynamique
     });
   });
 });
 
-// Servir la vidéo générée
-app.use("/video.mp4", (req, res) => {
-  const filePath = path.join(__dirname, "out/video.mp4");
-
-  // Vérifie si le fichier existe avant de l'envoyer
-  if (fs.existsSync(filePath)) {
-    console.log("📂 Envoi du fichier vidéo :", filePath);
-    res.sendFile(filePath);
+// Serve le fichier vidéo depuis le dossier 'out'
+app.get('/download/video', (req, res) => {
+  const videoPath = path.join(__dirname, 'out', 'video.mp4');
+  
+  // Vérifier si le fichier existe
+  if (fs.existsSync(videoPath)) {
+    res.download(videoPath, 'video.mp4', (err) => {
+      if (err) {
+        console.error("Erreur lors du téléchargement :", err);
+        res.status(500).json({ error: "Erreur lors du téléchargement du fichier." });
+      }
+    });
   } else {
-    console.error("❌ Fichier vidéo non trouvé !");
-    res
-      .status(404)
-      .json({ error: "Vidéo non trouvée. Essayez de la régénérer." });
+    res.status(404).json({ error: "Le fichier n'existe pas." });
   }
 });
-
 app.listen(PORT, '0.0.0.0', () => {
     console.log('🚀 Serveur démarré sur http://0.0.0.0:5000');
 });
