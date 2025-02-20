@@ -83,7 +83,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="VideoGenerator"
         component={VideoGenerator}
-        durationInFrames={questions.length * 5 * 30} // Ajuste la durée en fonction du nombre de questions
+        durationInFrames={questions.length * 10 * 30} // Ajuste la durée en fonction du nombre de questions
         fps={30}
         width={1080}
         height={1920}
