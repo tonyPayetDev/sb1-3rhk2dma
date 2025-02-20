@@ -27,7 +27,7 @@
 //       <Composition
 //         id="VideoGenerator"
 //         component={VideoGenerator}
-//         durationInFrames={defaultQuestions.length * 5 * 30}
+//         durationInFrames={defaultQuestions.length * 20 * 30}
 //         fps={30}
 //         width={1080}
 //         height={1920}
