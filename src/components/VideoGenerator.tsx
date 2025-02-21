@@ -148,32 +148,29 @@ const QuizVideo: React.FC<{ questions: Question[]; style: QuizStyle }> = ({
 }) => {
   console.log("📌 Nombre total de questions:", questions.length);
 
-  return (
-    <AbsoluteFill>
-      {questions.map((question, index) => {
-        const startFrame = index * question.duration * 30;
-        const endFrame = startFrame + question.duration * 30;
+return (
+  <AbsoluteFill>
+    {questions.map((question, index) => {
+      const startFrame = index * 210; // 7 secondes * 30 FPS
+      const endFrame = startFrame + 210;
 
-        console.log(
-          `📌 Question ${index}: "${question.text}" → Frames: ${startFrame} - ${endFrame}`
-        );
+      console.log(
+        `📌 Question ${index}: "${question.text}" → Frames: ${startFrame} - ${endFrame}`
+      );
 
-        return (
-          <Sequence
-            key={index}
-            from={startFrame}
-            durationInFrames={question.duration * 30}
-          >
-            <QuestionSequence
-              question={question}
-              style={style}
-              backgroundUrl={BACKGROUNDS[index % BACKGROUNDS.length]}
-            />
-          </Sequence>
-        );
-      })}
-    </AbsoluteFill>
-  );
+      return (
+        <Sequence key={index} from={startFrame} durationInFrames={210}>
+          <QuestionSequence
+            question={question}
+            style={style}
+            backgroundUrl={BACKGROUNDS[index % BACKGROUNDS.length]}
+          />
+        </Sequence>
+      );
+    })}
+  </AbsoluteFill>
+);
+
 };
 
 export function VideoGenerator({
